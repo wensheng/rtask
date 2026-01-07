@@ -177,25 +177,25 @@ mod tests {
 
     #[test]
     fn test_evaluate_env_set() {
-        env::set_var("TEST_RUSK_VAR", "value");
+        env::set_var("TEST_RTASK_VAR", "value");
 
         let ctx = Context::new();
         let when = When {
-            condition: WhenCondition::EnvSet("TEST_RUSK_VAR".to_string()),
+            condition: WhenCondition::EnvSet("TEST_RTASK_VAR".to_string()),
         };
 
         assert_eq!(evaluate_when(&when, &ctx).unwrap(), true);
 
-        env::remove_var("TEST_RUSK_VAR");
+        env::remove_var("TEST_RTASK_VAR");
     }
 
     #[test]
     fn test_evaluate_env_not_set() {
-        env::remove_var("NONEXISTENT_VAR_RUSK");
+        env::remove_var("NONEXISTENT_VAR_RTASK");
 
         let ctx = Context::new();
         let when = When {
-            condition: WhenCondition::EnvNotSet("NONEXISTENT_VAR_RUSK".to_string()),
+            condition: WhenCondition::EnvNotSet("NONEXISTENT_VAR_RTASK".to_string()),
         };
 
         assert_eq!(evaluate_when(&when, &ctx).unwrap(), true);

@@ -1,15 +1,15 @@
-//! Error types for Rusk
+//! Error types for Rtask
 
 use std::io;
 use std::path::PathBuf;
 use thiserror::Error;
 
-/// Result type alias for Rusk operations
-pub type Result<T> = std::result::Result<T, RuskError>;
+/// Result type alias for Rtask operations
+pub type Result<T> = std::result::Result<T, RtaskError>;
 
-/// Main error type for Rusk
+/// Main error type for Rtask
 #[derive(Error, Debug)]
-pub enum RuskError {
+pub enum RtaskError {
     /// Configuration-related errors
     #[error("Configuration error: {0}")]
     Config(#[from] ConfigError),

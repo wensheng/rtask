@@ -2,8 +2,8 @@
 
 mod common;
 
-use rusk::config::{parse_config, validate_config};
-use rusk::runner::{Context, Task};
+use rtask::config::{parse_config, validate_config};
+use rtask::runner::{Context, Task};
 use std::collections::HashMap;
 
 #[test]

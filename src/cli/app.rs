@@ -1,7 +1,7 @@
 //! Main CLI application
 
 use crate::config::{parse_config_auto, parse_config_file, validate_config, Config};
-use crate::error::{ConfigError, RuskError};
+use crate::error::{ConfigError, RtaskError};
 use crate::runner::{Context, Task, Verbosity};
 use clap::{Arg, ArgAction, ArgMatches, Command};
 use std::collections::HashMap;
@@ -19,7 +19,7 @@ pub struct App {
 
 impl App {
     /// Create a new app from configuration file
-    pub fn new() -> Result<Self, RuskError> {
+    pub fn new() -> Result<Self, RtaskError> {
         let (config, config_path) = parse_config_auto()?;
         validate_config(&config)?;
 
@@ -33,7 +33,7 @@ impl App {
     }
 
     /// Create app with a specific config file
-    pub fn with_config_file(path: PathBuf) -> Result<Self, RuskError> {
+    pub fn with_config_file(path: PathBuf) -> Result<Self, RtaskError> {
         let config = parse_config_file(&path)?;
         validate_config(&config)?;
 
@@ -47,7 +47,7 @@ impl App {
     }
 
     /// Run the application with command line arguments
-    pub fn run(mut self) -> Result<(), RuskError> {
+    pub fn run(mut self) -> Result<(), RtaskError> {
         let matches = self.command.clone().get_matches();
 
         // Handle global flags first
@@ -97,7 +97,7 @@ impl App {
 
 /// Build the clap command from configuration
 fn build_command(config: &Config) -> Command {
-    let mut cmd = Command::new(config.name.clone().unwrap_or_else(|| "rusk".to_string()))
+    let mut cmd = Command::new(config.name.clone().unwrap_or_else(|| "rtask".to_string()))
         .version(env!("CARGO_PKG_VERSION"))
         .about(config.usage.clone().unwrap_or_else(|| {
             "A modern YAML-based task runner".to_string()
@@ -107,7 +107,7 @@ fn build_command(config: &Config) -> Command {
                 .short('f')
                 .long("file")
                 .value_name("FILE")
-                .help("Path to rusk.yml config file")
+                .help("Path to rtask.yml config file")
                 .global(true),
         )
         .arg(
@@ -234,7 +234,7 @@ fn get_verbosity(matches: &ArgMatches) -> Verbosity {
 fn parse_task_vars(
     task: &crate::config::Task,
     matches: &ArgMatches,
-) -> Result<HashMap<String, String>, RuskError> {
+) -> Result<HashMap<String, String>, RtaskError> {
     let mut vars = HashMap::new();
 
     // Parse arguments
@@ -285,7 +285,7 @@ fn parse_task_vars(
 }
 
 /// Run the CLI application with provided arguments
-pub fn run() -> Result<(), RuskError> {
+pub fn run() -> Result<(), RtaskError> {
     // Check if --file flag is provided first
     let args: Vec<String> = std::env::args().collect();
     let file_path = extract_file_arg(&args);
@@ -326,7 +326,7 @@ mod tests {
     #[test]
     fn test_extract_file_arg() {
         let args = vec![
-            "rusk".to_string(),
+            "rtask".to_string(),
             "--file".to_string(),
             "test.yml".to_string(),
         ];
@@ -337,7 +337,7 @@ mod tests {
     #[test]
     fn test_extract_file_arg_short() {
         let args = vec![
-            "rusk".to_string(),
+            "rtask".to_string(),
             "-f".to_string(),
             "test.yml".to_string(),
         ];

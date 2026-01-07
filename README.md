@@ -1,4 +1,4 @@
-# Rusk
+# RTask
 
 A modern YAML-based task runner written in Rust.
 
@@ -6,7 +6,7 @@ A modern YAML-based task runner written in Rust.
 
 Cargo:
 
-    cargo install rusk
+    cargo install rtask
 
 ## Usage
 
@@ -23,7 +23,7 @@ tasks:
 ```
 
 ```bash
-$ rusk greet --name Friend
+$ rtask greet --name Friend
 [INFO] Running task: greet
 [RUN] echo "Hello, Friend!"
 Hello, Friend!
@@ -33,28 +33,28 @@ Hello, Friend!
 
 ```bash
 # Show help
-$ rusk --help
+$ rtask --help
 
 # Show task-specific help
-$ rusk greet --help
+$ rtask greet --help
 
 # Run a task
-$ rusk hello
+$ rtask hello
 
 # Run with options
-$ rusk greet --name "Rust" --greeting "Hi"
-$ rusk greet -n "Rust" -g "Hi"  # Short flags
+$ rtask greet --name "Rust" --greeting "Hi"
+$ rtask greet -n "Rust" -g "Hi"  # Short flags
 
 # Use different config file
-$ rusk --file other.yml hello
+$ rtask --file other.yml hello
 
 # Control verbosity
-$ rusk --quiet hello      # Minimal output
-$ rusk --verbose hello    # Detailed output
-$ rusk --silent hello     # No output
+$ rtask --quiet hello      # Minimal output
+$ rtask --verbose hello    # Detailed output
+$ rtask --silent hello     # No output
 
 # Check version
-$ rusk --version
+$ rtask --version
 ```
 
 ## Credits

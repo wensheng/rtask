@@ -1,13 +1,13 @@
 //! Configuration file parsing and discovery
 
 use crate::config::types::{Config, Task};
-use crate::error::{ConfigError, ConfigResult, RuskError};
+use crate::error::{ConfigError, ConfigResult, RtaskError};
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
 /// Default configuration file names to search for
-const CONFIG_FILE_NAMES: &[&str] = &["rusk.yml", "rusk.yaml"];
+const CONFIG_FILE_NAMES: &[&str] = &["rtask.yml", "rtask.yaml"];
 
 /// Find the configuration file by searching current and parent directories
 pub fn find_config_file() -> ConfigResult<PathBuf> {
@@ -43,7 +43,7 @@ pub fn find_config_file_from(start_dir: PathBuf) -> ConfigResult<PathBuf> {
 }
 
 /// Parse a configuration file from a path
-pub fn parse_config_file(path: &Path) -> Result<Config, RuskError> {
+pub fn parse_config_file(path: &Path) -> Result<Config, RtaskError> {
     let contents = fs::read_to_string(path)
         .map_err(|e| ConfigError::Invalid(format!("Failed to read file: {}", e)))?;
 
@@ -51,7 +51,7 @@ pub fn parse_config_file(path: &Path) -> Result<Config, RuskError> {
 }
 
 /// Parse configuration from a string
-pub fn parse_config(yaml: &str, config_path: Option<&Path>) -> Result<Config, RuskError> {
+pub fn parse_config(yaml: &str, config_path: Option<&Path>) -> Result<Config, RtaskError> {
     let mut config: Config = serde_yaml::from_str(yaml)?;
 
     // Process includes if present
@@ -63,7 +63,7 @@ pub fn parse_config(yaml: &str, config_path: Option<&Path>) -> Result<Config, Ru
 }
 
 /// Process include directives in tasks
-fn process_includes(config: &mut Config, config_path: &Path) -> Result<(), RuskError> {
+fn process_includes(config: &mut Config, config_path: &Path) -> Result<(), RtaskError> {
     let base_dir = config_path.parent().unwrap_or_else(|| Path::new("."));
 
     let task_names: Vec<String> = config.tasks.keys().cloned().collect();
@@ -86,7 +86,7 @@ fn process_includes(config: &mut Config, config_path: &Path) -> Result<(), RuskE
 }
 
 /// Load a task from an included file
-fn load_included_task(path: &Path) -> Result<Task, RuskError> {
+fn load_included_task(path: &Path) -> Result<Task, RtaskError> {
     let contents = fs::read_to_string(path).map_err(|e| {
         ConfigError::IncludeFile {
             path: path.to_path_buf(),
@@ -105,7 +105,7 @@ fn load_included_task(path: &Path) -> Result<Task, RuskError> {
 }
 
 /// Parse configuration with automatic file discovery
-pub fn parse_config_auto() -> Result<(Config, PathBuf), RuskError> {
+pub fn parse_config_auto() -> Result<(Config, PathBuf), RtaskError> {
     let config_path = find_config_file()?;
     let config = parse_config_file(&config_path)?;
     Ok((config, config_path))
@@ -133,7 +133,7 @@ tasks:
     #[test]
     fn test_find_config_in_current_dir() {
         let temp_dir = TempDir::new().unwrap();
-        let config_path = temp_dir.path().join("rusk.yml");
+        let config_path = temp_dir.path().join("rtask.yml");
 
         fs::write(
             &config_path,
@@ -152,7 +152,7 @@ tasks:
     #[test]
     fn test_find_config_in_parent_dir() {
         let temp_dir = TempDir::new().unwrap();
-        let config_path = temp_dir.path().join("rusk.yml");
+        let config_path = temp_dir.path().join("rtask.yml");
         let sub_dir = temp_dir.path().join("subdir");
 
         fs::create_dir(&sub_dir).unwrap();

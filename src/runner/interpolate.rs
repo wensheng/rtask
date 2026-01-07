@@ -131,13 +131,13 @@ mod tests {
 
     #[test]
     fn test_environment_variable() {
-        env::set_var("TEST_VAR_RUSK", "test_value");
+        env::set_var("TEST_VAR_RTASK", "test_value");
 
         let vars = HashMap::new();
-        let result = interpolate("Value: ${TEST_VAR_RUSK}", &vars).unwrap();
+        let result = interpolate("Value: ${TEST_VAR_RTASK}", &vars).unwrap();
         assert_eq!(result, "Value: test_value");
 
-        env::remove_var("TEST_VAR_RUSK");
+        env::remove_var("TEST_VAR_RTASK");
     }
 
     #[test]

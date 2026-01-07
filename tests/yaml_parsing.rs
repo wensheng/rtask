@@ -2,7 +2,7 @@
 
 mod common;
 
-use rusk::config::{parse_config, parse_config_file, validate_config};
+use rtask::config::{parse_config, parse_config_file, validate_config};
 
 #[test]
 fn test_parse_complete_config() {
@@ -120,7 +120,7 @@ tasks:
       - "src/**/*.rs"
       - "Cargo.toml"
     target:
-      - "target/debug/rusk"
+      - "target/debug/rtask"
     run: cargo build
 "#;
 
