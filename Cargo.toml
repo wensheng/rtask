@@ -6,6 +6,12 @@ authors = ["Wensheng Wang"]
 description = "A simple YAML-based task runner written in Rust"
 license = "MIT"
 repository = "https://github.com/wensheng/rusk"
+homepage = "https://github.com/wensheng/rusk"
+readme = "README.md"
+categories = ["command-line-utilities"]
+exclude = [".github/*", "/tests/*"]
+# documentation = "https://docs.rs/rtask"
+keywords = ["cli", "utility", "task", "make"]
 
 [dependencies]
 # Serialization
