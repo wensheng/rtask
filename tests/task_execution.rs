@@ -1,10 +1,7 @@
 //! Integration tests for task execution
 
-mod common;
-
 use rtask::config::{parse_config, validate_config};
 use rtask::runner::{Context, Task};
-use std::collections::HashMap;
 
 #[test]
 fn test_execute_simple_task() {
@@ -185,7 +182,6 @@ tasks:
 
 #[test]
 fn test_finally_runs_even_on_failure() {
-    use std::fs;
     use tempfile::TempDir;
 
     let temp_dir = TempDir::new().unwrap();

@@ -139,7 +139,7 @@ fn check_task_cycle(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::config::types::{Arg, Run, RunItem, SubTask, SubTaskDetail, TaskOption};
+    use crate::config::types::{Arg, Run, RunItem, SubTask, TaskOption};
     use std::collections::HashMap;
 
     #[test]

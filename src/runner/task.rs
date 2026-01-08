@@ -507,7 +507,7 @@ mod tests {
 
     #[test]
     fn test_task_validation_source_without_target() {
-        let mut config = config::Task {
+        let config = config::Task {
             usage: None,
             description: None,
             private: false,
@@ -528,7 +528,7 @@ mod tests {
 
     #[test]
     fn test_task_validation_duplicate_names() {
-        let mut config = config::Task {
+        let config = config::Task {
             usage: None,
             description: None,
             private: false,
